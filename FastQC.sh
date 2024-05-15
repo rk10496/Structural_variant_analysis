@@ -1,7 +1,5 @@
 #!/bin/bash
 
-#FastQC,a tool used to check the quality of high-throughput sequence data
-
 #Author:Rahul_Kumar
 
 #SBATCH --job-name=FastQC
