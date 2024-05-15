@@ -1,0 +1,50 @@
+#!/bin/bash
+
+#Author:Rahul_Kumar
+
+#SBATCH --job-name=FastQC
+#SBATCH -N 1
+#SBATCH --cpus-per-task=64
+#SBATCH -t 1-00:00
+
+# Modules required
+module purge
+module load  fastqc/0.11.7
+module load  multiqc/1.19
+
+#Create new directory
+Designated_folder="/bgfs/alee/LO_LAB/Personal/Rahul/Test_sample"
+mkdir -p "$Designated_folder/1_Fastqc_result"
+
+# Input directory
+Input_dir="/bgfs/alee/LO_LAB/Personal/Rahul/Test_sample"
+
+# Output directory 
+Output_dir="/bgfs/alee/LO_LAB/Personal/Rahul/Test_sample/1_Fastqc_result"
+
+# Loop through all FASTQ files in the input directory
+for fastq_file in $Input_dir/*.fastq.gz; do
+    # Extract the filename without extension
+    filename=$(basename "$fastq_file" .fastq.gz)
+    
+    # Run FastQC
+	fastqc -o "$Output_dir" "$fastq_file" > "$Output_dir/${filename}_fastqc.log"
+    
+    echo "FastQC analysis completed for $filename"
+done
+
+echo "All FastQC analyses completed"
+
+# MultiQC is a reporting tool that aggregate results from bioinformatics analyses across many samples into a single report.
+
+# Define input directory containing analysis results
+Input_dir1="/bgfs/alee/LO_LAB/Personal/Rahul/Test_sample/1_Fastqc_result"
+
+# Define output directory where MultiQC report will be saved
+Output_dir1="/bgfs/alee/LO_LAB/Personal/Rahul/Test_sample/1_Fastqc_result"
+
+# Run MultiQC on the input directory
+multiqc "$Input_dir1" -o "$Output_dir1"
+
+echo "MultiQC analysis completed"
+
