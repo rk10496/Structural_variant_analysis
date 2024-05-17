@@ -40,21 +40,22 @@ Output_dir1="/bgfs/alee/LO_LAB/Personal/Rahul/Test_sample/4_Mapped_file/Qualimap
 # List of sample names
 Samples=("TP19-M480_FOL6151A5_S12" "TP19-M483_FOL6151A4_S9" "TP19-M497_FOL6151A3_S7" "TP19-M774_FOL6151A1_S2" "TP19-M892_FOL6151A2_S4" )
 
+
 # Iterate over each sample
-for sample in "${Samples[@]}"; do
+for Sample in "${Samples[@]}"; do
 	
     # Input FASTQ files for the sample
-    Forward_read="${Input_dir1}/${sample}_R1_paired.fastq.gz"
-    Reverse_read="${Input_dir1}/${sample}_R2_paired.fastq.gz"
+    Forward_read="${Input_dir1}/${Sample}_R1_paired.fastq.gz"
+    Reverse_read="${Input_dir1}/${Sample}_R2_paired.fastq.gz"
 
     # Output SAM file for the sample
-    Output_sam="${Output_dir}/${sample}.sam"
+    Output_sam="${Output_dir}/${Sample}.sam"
 
     # Perform mapping using bwa-mem
-    echo "Aligning sample: $sample"
+    echo "Aligning Sample: $Sample"
     bwa mem -t 64 $Reference $Forward_read $Reverse_read > $Output_sam
 
-    echo "Mapping completed for sample: $sample"
+    echo "Alignment completed for $Sample"
 done
 
 echo "All the samples were mapped successfully."
@@ -67,10 +68,10 @@ echo "All the samples were mapped successfully."
 # Iterate over each SAM file in the input directory
 for sam_file in $Input_dir2/*.sam; do
     # Extract sample name from the SAM file
-    sample=$(basename "$sam_file" .sam)
+    Sample=$(basename "$sam_file" .sam)
 
     # Output BAM file
-    bam_file="$Output_dir/$sample.bam"
+    bam_file="$Output_dir/$Sample.bam"
 
     # Convert SAM to BAM
     echo "Converting $sam_file to BAM format..."
@@ -84,10 +85,10 @@ echo "BAM files generated for all the SAM files."
 # Iterate over each BAM file in the input directory
 for bam_file in $Input_dir2/*.bam; do
     # Extract sample name from the BAM file
-    sample=$(basename "$bam_file" .bam)
+    Sample=$(basename "$bam_file" .bam)
 
     # Output Sorted BAM file for the sample
-    sorted_bam="${Output_dir}/${sample}_sorted.bam"
+    sorted_bam="${Output_dir}/${Sample}_sorted.bam"
 	
 	# Sort BAM file
     echo "Sorting $bam_file..."
@@ -101,10 +102,10 @@ echo "All samples were sorted successfully."
 # Iterate over each Sorted BAM file in the input directory
 for sorted_bam_file in $Input_dir2/*_sorted.bam; do
     # Extract sample name from the sorted BAM file
-    sample=$(basename "$sorted_bam_file" _sorted.bam)
+    Sample=$(basename "$sorted_bam_file" _sorted.bam)
 
     # Output bai file for the sample
-    Output_bai="${Output_dir}/${sample}.bai"
+    Output_bai="${Output_dir}/${Sample}.bai"
 	
 	# Index BAM file
     echo "Indexing $sorted_bam_file..."
@@ -120,26 +121,26 @@ echo "All samples were converted sorted and indexed successfully."
 # Iterate over each BAM file in the input directory
 for bam_file in "$Input_dir2"/*sorted.bam; do
     # Extract sample name from the BAM file name
-    sample=$(basename "$bam_file" _sorted.bam)
+    Sample=$(basename "$bam_file" _sorted.bam)
 
-    # Create a unique output directory for the sample
-    sample_output_dir="$Output_dir1/$sample"
-    mkdir -p "$sample_output_dir"
+    # Create an output directory for the sample
+    Sample_output_dir="$Output_dir1/$Sample"
+    mkdir -p "$Sample_output_dir"
 
     # Run BamQC tool
-    bamqc "$bam_file" --outdir "$sample_output_dir"
+    bamqc "$bam_file" --outdir "$Sample_output_dir"
 
-    echo "BamQC report generated for $sample"
+    echo "BamQC report generated for $Sample"
 
     # Run Qualimap
     qualimap bamqc \
         -bam "$bam_file" \
-        -outdir "$sample_output_dir" \
-        -outfile "${sample}_qualimap_report.pdf" \
+        -outdir "$Sample_output_dir" \
+        -outfile "${Sample}_qualimap_report.pdf" \
         -outformat pdf \
         --java-mem-size=4G
 
-    echo "Qualimap report generated for $sample"
+    echo "Qualimap report generated for $Sample"
 done
 
 echo "QC completed for all samples"
