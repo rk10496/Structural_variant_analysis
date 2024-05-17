@@ -7,7 +7,7 @@
 # BWA is a software package for mapping low-divergent sequences against a large reference genome, such as the human genome
 # BWA-MEM, for high-quality queries and better performance, as it is faster and more accurate
 
-#SBATCH --job-name=Mapping
+#SBATCH --job-name=Alignment
 #SBATCH -N 1
 #SBATCH --cpus-per-task=64
 #SBATCH -t 1-00:00
