@@ -131,7 +131,7 @@ for bam_file in "$Input_dir2"/*sorted.bam; do
 
     echo "BamQC report generated for $sample"
 
-    # Run Qualimap with increased memory allocation
+    # Run Qualimap
     qualimap bamqc \
         -bam "$bam_file" \
         -outdir "$sample_output_dir" \
