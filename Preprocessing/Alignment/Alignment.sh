@@ -1,9 +1,11 @@
 #!/bin/bash
 
+# This script is used to align the samples with the reference genome and check the qulaity of BAM files.
+
+# Author=Rahul_kumar/LeeOestereich lab
+
 # BWA is a software package for mapping low-divergent sequences against a large reference genome, such as the human genome
 # BWA-MEM, for high-quality queries and better performance, as it is faster and more accurate
-
-#Author=Rahul_kumar
 
 #SBATCH --job-name=Mapping
 #SBATCH -N 1
@@ -16,9 +18,12 @@ module load gcc/8.2.0
 module load bwa/0.7.17
 module load samtools/1.9
 
-#Create new directory
+# Create new directory
 Designated_path="/bgfs/alee/LO_LAB/Personal/Rahul/Test_sample"
 mkdir -p "$Designated_path/4_Mapped_file"
+
+Designated_path1="/bgfs/alee/LO_LAB/Personal/Rahul/Test_sample/4_Mapped_file"
+mkdir -p "$Designated_path1/Qualimap"
 
 # Reference genome file
 Reference="/bgfs/alee/LO_LAB/Personal/Rahul/software/Human_ref_GRCH38.p7/GCF_000001405.33_GRCh38.p7_genomic.fna"
@@ -26,9 +31,11 @@ Reference="/bgfs/alee/LO_LAB/Personal/Rahul/software/Human_ref_GRCH38.p7/GCF_000
 # Directory containing FASTQ files for mapping
 Input_dir1="/bgfs/alee/LO_LAB/Personal/Rahul/Test_sample/2_Trimmed_file/Paired"
 Input_dir2="/bgfs/alee/LO_LAB/Personal/Rahul/Test_sample/4_Mapped_file"
+Input_dir3="/bgfs/alee/LO_LAB/Personal/Rahul/Test_sample/4_Mapped_file/Qualimap"
 
 # Output directory for aligned SAM files
 Output_dir="/bgfs/alee/LO_LAB/Personal/Rahul/Test_sample/4_Mapped_file"
+Output_dir1="/bgfs/alee/LO_LAB/Personal/Rahul/Test_sample/4_Mapped_file/Qualimap"
 	
 # List of sample names
 Samples=("TP19-M480_FOL6151A5_S12" "TP19-M483_FOL6151A4_S9" "TP19-M497_FOL6151A3_S7" "TP19-M774_FOL6151A1_S2" "TP19-M892_FOL6151A2_S4" )
@@ -106,4 +113,41 @@ for sorted_bam_file in $Input_dir2/*_sorted.bam; do
     echo "Indexing bai file created: $Output_bai"
 done
 
-echo "All samples were converted sorted and indexed successfully.."
+echo "All samples were converted sorted and indexed successfully."
+
+#BamQC, used to perform quality control on BAM files
+
+# Iterate over each BAM file in the input directory
+for bam_file in "$Input_dir2"/*sorted.bam; do
+    # Extract sample name from the BAM file name
+    sample=$(basename "$bam_file" _sorted.bam)
+
+    # Create a unique output directory for the sample
+    sample_output_dir="$Output_dir1/$sample"
+    mkdir -p "$sample_output_dir"
+
+    # Run BamQC tool
+    bamqc "$bam_file" --outdir "$sample_output_dir"
+
+    echo "BamQC report generated for $sample"
+
+    # Run Qualimap with increased memory allocation
+    qualimap bamqc \
+        -bam "$bam_file" \
+        -outdir "$sample_output_dir" \
+        -outfile "${sample}_qualimap_report.pdf" \
+        -outformat pdf \
+        --java-mem-size=4G
+
+    echo "Qualimap report generated for $sample"
+done
+
+echo "QC completed for all samples"
+
+# Load MultiQC module
+module load multiqc/1.19
+
+# Run MultiQC on the output directory
+multiqc "$Input_dir3" -o "$Output_dir1"
+
+echo "MultiQC analysis completed"
