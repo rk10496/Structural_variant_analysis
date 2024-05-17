@@ -1,6 +1,8 @@
 #!/bin/bash
 
-#Author:Rahul_Kumar
+# This script is used to check the quality of high-throughput sequence data.
+
+# Author=Rahul_kumar/LeeOestereich lab
 
 #SBATCH --job-name=FastQC
 #SBATCH -N 1
@@ -12,7 +14,7 @@ module purge
 module load  fastqc/0.11.7
 module load  multiqc/1.19
 
-#Create new directory
+# Create new directory
 Designated_folder="/bgfs/alee/LO_LAB/Personal/Rahul/Test_sample"
 mkdir -p "$Designated_folder/1_Fastqc_result"
 
@@ -47,4 +49,3 @@ Output_dir1="/bgfs/alee/LO_LAB/Personal/Rahul/Test_sample/1_Fastqc_result"
 multiqc "$Input_dir1" -o "$Output_dir1"
 
 echo "MultiQC analysis completed"
-
