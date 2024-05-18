@@ -28,7 +28,7 @@ designated_path1="/bgfs/alee/LO_LAB/Personal/Rahul/Test_sample/4_mapped_file"
 mkdir -p "$designated_path1/qualimap"
 
 # Reference genome file
-reference="/bgfs/alee/LO_LAB/Personal/Rahul/software/Human_ref_GRCH38.p7/GCF_000001405.33_GRCh38.p7_genomic.fna"
+reference="/bgfs/alee/LO_LAB/Personal/Rahul/software/Human_ref_GRCH38.p7/Human_genome_hg38_p7_chr_only.fna"
 
 # Directory containing FASTQ files for mapping
 input_dir1="/bgfs/alee/LO_LAB/Personal/Rahul/Test_sample/2_trimmed_file/paired"
