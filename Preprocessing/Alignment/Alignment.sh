@@ -22,22 +22,22 @@ module load  multiqc/1.19
 
 # Create new directory
 designated_path="/bgfs/alee/LO_LAB/Personal/Rahul/Test_sample"
-mkdir -p "$designated_path/4_mapped_file"
+mkdir -p "$designated_path/4_alignment_file"
 
-designated_path1="/bgfs/alee/LO_LAB/Personal/Rahul/Test_sample/4_mapped_file"
+designated_path1="/bgfs/alee/LO_LAB/Personal/Rahul/Test_sample/4_alignment_file"
 mkdir -p "$designated_path1/qualimap"
 
 # Reference genome file
 reference="/bgfs/alee/LO_LAB/Personal/Rahul/software/Human_ref_GRCH38.p7/Human_genome_hg38_p7_chr_only.fna"
 
-# Directory containing FASTQ files for mapping
+# Directory containing FASTQ files for alignment
 input_dir1="/bgfs/alee/LO_LAB/Personal/Rahul/Test_sample/2_trimmed_file/paired"
-input_dir2="/bgfs/alee/LO_LAB/Personal/Rahul/Test_sample/4_mapped_file"
-input_dir3="/bgfs/alee/LO_LAB/Personal/Rahul/Test_sample/4_mapped_file/qualimap"
+input_dir2="/bgfs/alee/LO_LAB/Personal/Rahul/Test_sample/4_alignment_file"
+input_dir3="/bgfs/alee/LO_LAB/Personal/Rahul/Test_sample/4_alignment_file/qualimap"
 
 # Output directory for aligned SAM files
-output_dir="/bgfs/alee/LO_LAB/Personal/Rahul/Test_sample/4_mapped_file"
-output_dir1="/bgfs/alee/LO_LAB/Personal/Rahul/Test_sample/4_mapped_file/qualimap"
+output_dir="/bgfs/alee/LO_LAB/Personal/Rahul/Test_sample/4_alignment_file"
+output_dir1="/bgfs/alee/LO_LAB/Personal/Rahul/Test_sample/4_alignment_file/qualimap"
 	
 # List of sample names
 samples=("TP19-M480_FOL6151A5_S12" "TP19-M483_FOL6151A4_S9" "TP19-M497_FOL6151A3_S7" "TP19-M774_FOL6151A1_S2" "TP19-M892_FOL6151A2_S4" )
@@ -52,14 +52,14 @@ for sample in "${samples[@]}"; do
     # Output SAM file for the sample
     output_sam="${Output_dir}/${sample}.sam"
 
-    # Perform mapping using bwa-mem
+    # Perform alignment using bwa-mem
     echo "Aligning sample: $sample"
     bwa mem -t 64 $reference $forward_read $reverse_read > $output_sam
 
     echo "Alignment completed for $sample"
 done
 
-echo "All the samples were mapped successfully."
+echo "All the samples were aligned successfully."
 
 # samtools is a suite of programs for interacting with high-throughput sequencing data. 
 # samtools view used to convert a sam file to a bam file
