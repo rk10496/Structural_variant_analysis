@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# This script is used to align the samples with the reference genome and check the qulaity of BAM files.
+# This script is used to align the samples with the reference genome and check the quality of BAM files.
 
 # Author=Rahul_kumar/LeeOestereich lab
 
