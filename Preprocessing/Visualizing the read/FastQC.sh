@@ -15,24 +15,24 @@ module load  fastqc/0.11.7
 module load  multiqc/1.19
 
 # Create new directory
-Designated_folder="/bgfs/alee/LO_LAB/Personal/Rahul/Test_sample"
-mkdir -p "$Designated_folder/1_Fastqc_result"
+designated_folder="/bgfs/alee/LO_LAB/Personal/Rahul/Test_sample"
+mkdir -p "$designated_folder/1_fastqc_result"
 
 # Input directory
-Input_dir="/bgfs/alee/LO_LAB/Personal/Rahul/Test_sample"
+input_dir="/bgfs/alee/LO_LAB/Personal/Rahul/Test_sample"
 
 # Output directory 
-Output_dir="/bgfs/alee/LO_LAB/Personal/Rahul/Test_sample/1_Fastqc_result"
+output_dir="/bgfs/alee/LO_LAB/Personal/Rahul/Test_sample/1_fastqc_result"
 
 # Loop through all FASTQ files in the input directory
-for fastq_file in $Input_dir/*.fastq.gz; do
+for fastq_file in $input_dir/*.fastq.gz; do
     # Extract the filename without extension
-    filename=$(basename "$fastq_file" .fastq.gz)
+    sample=$(basename "$fastq_file" .fastq.gz)
     
     # Run FastQC
-	fastqc -o "$Output_dir" "$fastq_file" > "$Output_dir/${filename}_fastqc.log"
+	fastqc -o "$output_dir" "$fastq_file" > "$output_dir/${sample}_fastqc.log"
     
-    echo "FastQC analysis completed for $filename"
+    echo "FastQC analysis completed for $sample"
 done
 
 echo "All FastQC analyses completed"
@@ -40,12 +40,12 @@ echo "All FastQC analyses completed"
 # MultiQC is a reporting tool that aggregate results from bioinformatics analyses across many samples into a single report.
 
 # Define input directory containing analysis results
-Input_dir1="/bgfs/alee/LO_LAB/Personal/Rahul/Test_sample/1_Fastqc_result"
+input_dir1="/bgfs/alee/LO_LAB/Personal/Rahul/Test_sample/1_fastqc_result"
 
 # Define output directory where MultiQC report will be saved
-Output_dir1="/bgfs/alee/LO_LAB/Personal/Rahul/Test_sample/1_Fastqc_result"
+output_dir1="/bgfs/alee/LO_LAB/Personal/Rahul/Test_sample/1_fastqc_result"
 
 # Run MultiQC on the input directory
-multiqc "$Input_dir1" -o "$Output_dir1"
+multiqc "$input_dir1" -o "$output_dir1"
 
 echo "MultiQC analysis completed"
