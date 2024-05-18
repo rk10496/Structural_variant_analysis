@@ -4,8 +4,8 @@
 
 # Author:Rahul_Kumar/LeeOestereich lab
 
-# Before running trimmomatic, have a look at MultiQC Report
-# Trimmomatic,trimming tool to remove adapter and low quality reads for Illumina NGS data.
+# Before running trimmomatic, have a look at MultiQC Report of raw sequencing data
+# Trimmomatic,trimming tool to remove adapter and low quality reads for Illumina NGS data
 
 #SBATCH --job-name=Trimming
 #SBATCH -N 1
