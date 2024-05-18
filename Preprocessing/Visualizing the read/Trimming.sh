@@ -1,11 +1,11 @@
 #!/bin/bash
 
-# This script is used to trim low quality reads and perform QC analysis on trimmed read
+# This script is used to trim low quality reads and perform QC analysis on trimmed reads.
 
 # Author:Rahul_Kumar/LeeOestereich lab
 
-# Before running trimmomatic, have a look at MultiQC Report of raw sequencing data
-# Trimmomatic,trimming tool to remove adapter and low quality reads for Illumina NGS data
+# Before running trimmomatic, have a look at the MultiQC Report of raw sequencing data.
+# Trimmomatic, trimming tool to remove adapter and low-quality reads for Illumina NGS data.
 
 #SBATCH --job-name=Trimming
 #SBATCH -N 1
