@@ -42,7 +42,7 @@ for sorted_bam in "$input_dir1"/*_sorted.bam; do
     sample=$(basename "$sorted_bam" _sorted.bam)
 
     # Output RG BAM file for the sample
-    rg_bam="${output_dir}/${sample}_rg.bam"
+    rg_bam="${output_dir}/${sample}.rg.bam"
    
     # Run AddOrReplaceReadGroups tool
     java -jar $Picard/picard.jar AddOrReplaceReadGroups \
@@ -69,7 +69,7 @@ for rg_bam in "$input_dir2"/*_rg.bam; do
     sample=$(basename "$rg_bam" _rg.bam)
 
     # Output marked duplicates BAM file for the sample
-	rg_mkdp_bam="${output_dir}/${sample}rg.mkdp.bam"
+	rg_mkdp_bam="${output_dir}/${sample}.rg.mkdp.bam"
   
 
     # Run Picard's MarkDuplicates tool
@@ -94,7 +94,7 @@ for rg_mkdp_bam in "$input_dir2"/*_rg.mkdp.bam; do
     sample=$(basename "$rg_mkdp_bam" _rg.mkdp.bam)
 
     # Output rg mkdp bam bai file for the sample
-     rg_mkdp_bam_bai="${output_dir}/${sample}_rg.mkdp.bam.bai"
+     rg_mkdp_bam_bai="${output_dir}/${sample}.rg.mkdp.bam.bai"
    
     # Run BuildBamIndex utility
     java -jar $Picard/picard.jar BuildBamIndex \
