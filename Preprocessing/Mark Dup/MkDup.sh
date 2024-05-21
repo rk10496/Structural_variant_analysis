@@ -155,7 +155,7 @@ for recal_bam in "$input_dir2"/*.recal.bam; do
     sample=$(basename "$recal_bam" .recal.bam)
 
     # Output rg mkdp bam bai file for the sample
-     recal_bam_bai="${output_dir}/${sample}recal.bam.bai"
+     recal_bam_bai="${output_dir}/${sample}.recal.bam.bai"
    
     # Run BuildBamIndex utility
     java -jar $Picard/picard.jar BuildBamIndex \
