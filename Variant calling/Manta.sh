@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# This script is used for the Manta Structural Variant Caller
+
 # Author=Rahul_kumar/LeeOestereich lab
 
 #SBATCH --job-name=Manta
