@@ -39,19 +39,18 @@ delly call -g ${reference} -o ${output_dir}/${sample}.vcf ${input_bam}
 delly call -t DEL -g ${reference} -o ${output_dir}/${sample}_Del.bcf ${input_bam}
 delly call -t DUP -g ${reference} -o ${output_dir}/${sample}_Dup.bcf ${input_bam}
 delly call -t INV -g ${reference} -o ${output_dir}/${sample}_Inv.bcf ${input_bam}
-delly call -t BND -g ${reference} -o ${output_dir}/${sample}_Tra.bcf ${input_bam}
+delly call -t BND -g ${reference} -o ${output_dir}/${sample}_BND.bcf ${input_bam}
 delly call -t INS -g ${reference} -o ${output_dir}/${sample}_Ins.bcf ${input_bam}
 
 echo "Delly analysis completed for all samples"
 
 # Convert the generated binary format files into readable VCF
-bcftools view ${output_dir}/${sample}_Del.vcf -o ${output_dir}/${sample}_Del.vcf
-bcftools view ${output_dir}/${sample}_Dup.vcf -o ${output_dir}/${sample}_Dup.vcf
-bcftools view ${output_dir}/${sample}_Inv.vcf -o ${output_dir}/${sample}_Inv.vcf
-bcftools view ${output_dir}/${sample}_BND.vcf -o ${output_dir}/${sample}_BND.vcf
-bcftools view ${output_dir}/${sample}_Ins.vcf -o ${output_dir}/${sample}_Ins.vcf
+bcftools view ${output_dir}/${sample}_Del.bcf -o ${output_dir}/${sample}_Del.vcf
+bcftools view ${output_dir}/${sample}_Dup.bcf -o ${output_dir}/${sample}_Dup.vcf
+bcftools view ${output_dir}/${sample}_Inv.bcf -o ${output_dir}/${sample}_Inv.vcf
+bcftools view ${output_dir}/${sample}_BND.bcf -o ${output_dir}/${sample}_BND.vcf
+bcftools view ${output_dir}/${sample}_Ins.bcf -o ${output_dir}/${sample}_Ins.vcf
 
 done
 
 echo "Conversion completed for all samples"
-
