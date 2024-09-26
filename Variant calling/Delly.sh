@@ -35,11 +35,11 @@ for input_bam in ${input_dir}/*.recal.bam; do
 
 # Run Delly to detect structural variants
 delly call -g ${reference} -o ${output_dir}/${sample}.vcf ${input_bam}
-delly call -t DEL -g ${reference} -o ${output_dir}/${sample}_Del.vcf ${input_bam}
-delly call -t DUP -g ${reference} -o ${output_dir}/${sample}_Dup.vcf ${input_bam}
-delly call -t INV -g ${reference} -o ${output_dir}/${sample}_Inv.vcf ${input_bam}
-delly call -t TRA -g ${reference} -o ${output_dir}/${sample}_Tra.vcf ${input_bam}
-delly call -t INS -g ${reference} -o ${output_dir}/${sample}_Ins.vcf ${input_bam}
+delly call -t DEL -g ${reference} -o ${output_dir}/${sample}_Del.bcf ${input_bam}
+delly call -t DUP -g ${reference} -o ${output_dir}/${sample}_Dup.bcf ${input_bam}
+delly call -t INV -g ${reference} -o ${output_dir}/${sample}_Inv.bcf ${input_bam}
+delly call -t BND -g ${reference} -o ${output_dir}/${sample}_Tra.bcf ${input_bam}
+delly call -t INS -g ${reference} -o ${output_dir}/${sample}_Ins.bcf ${input_bam}
 
 done
 
